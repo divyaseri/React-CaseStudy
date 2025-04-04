@@ -4,6 +4,7 @@ const nouns = ["Gadget", "Tool", "Device", "Accessory", "Camera", "Object", "Wid
 const actions = ["enhances", "improves", "transforms", "elevates", "simplifies", "revolutionizes", "modernizes"];
 const features = ["your lifestyle", "daily routine", "efficiency", "performance", "convenience", "comfort", "experience"];
 
+// getRandomElement returns random element from the array
 function getRandomElement(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }

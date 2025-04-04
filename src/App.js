@@ -48,7 +48,7 @@ function App() {
       ) {
         setPage((prev) => prev + 1);
       }
-    }, 200); // Adjust debounce delay to 200ms
+    }, 200); // Add debounce delay to 200ms
 
     window.addEventListener('scroll', handleScroll);
     return () => {
