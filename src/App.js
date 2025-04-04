@@ -9,6 +9,7 @@ function App() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [sortDescending, setSortDescending] = useState(false);
   const [noResult, setNoResult] = useState(false);
 
   // Fetch items from backend API
@@ -29,8 +30,8 @@ function App() {
       setLoading(false);
     } catch (err) {
       console.error('Fetch error:', err);
-      setLoading(false);
     }
+    setLoading(false);
   }, [page, search, loading, hasMore]);
 
   // Fetch items on mount and when dependencies change
@@ -48,7 +49,11 @@ function App() {
       ) {
         setPage((prev) => prev + 1);
       }
+<<<<<<< Updated upstream
     }, 200); // Add debounce delay to 200ms
+=======
+    }, 200);
+>>>>>>> Stashed changes
 
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -60,9 +65,14 @@ function App() {
   // Handle search input with debounce
   const handleSearch = debounce((e) => {
     setSearch(e.target.value);
-    setPage(1);  // Reset to page 1 when search changes
-    setHasMore(true); // Reset "has more" flag when search changes
+    setPage(1);
+    setHasMore(true);
   }, 300);
+
+  // Sort items by price (Descending)
+  const sortedItems = [...items].sort((a, b) =>
+    sortDescending ? b.price - a.price : a.id - b.id
+  );
 
   return (
     <div className="container py-4">
@@ -71,17 +81,23 @@ function App() {
       </header>
 
       <main>
-        <div className="my-4">
+        <div className="my-4 d-flex justify-content-between">
           <input
             type="text"
             placeholder="Search by name, description, or price..."
             onChange={handleSearch}
             className="form-control form-control-lg"
           />
+          <button
+            className="btn btn-secondary ml-2"
+            onClick={() => setSortDescending(!sortDescending)}
+          >
+            {sortDescending ? "Sort by Default" : "Sort by Price ↓"}
+          </button>
         </div>
 
         <div className="row">
-          {items.map((item) => (
+          {sortedItems.map((item) => (
             <div key={item.id} className="col-lg-3 col-md-4 col-sm-6 mb-4">
               <div className="card shadow-lg">
                 <img
@@ -102,7 +118,7 @@ function App() {
 
         {loading && (
           <div className="text-center my-4">
-            <div className="spinner-border text-primary" style={{ animationDuration: "0.75s" }}></div>
+            <div className="spinner-border text-primary"></div>
           </div>
         )}
         {!hasMore && <div className="text-center text-muted my-4">No more items!</div>}

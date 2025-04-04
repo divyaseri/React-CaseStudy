@@ -34,6 +34,7 @@ app.get('/api/items', (req, res) => {
     );
   });
 
+  // const sortedItems = filteredItems.sort((a, b) => b.itemPrice - a.itemPrice);
   // Paginate the filtered items
   const paginatedItems = filteredItems.slice(offset, offset + parseInt(limit));
 
